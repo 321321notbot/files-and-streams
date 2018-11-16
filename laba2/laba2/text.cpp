@@ -9,9 +9,7 @@ text::text()
 
 text::text(string & name)
 {
-	//cout << "ctor text" << endl;
 	file.open(name);
-	puncMarks = ".,!?";
 	if (file.is_open())
 		cout << "File is readable" << endl;
 	else
@@ -22,7 +20,6 @@ text::text(string & name)
 
 text::~text()
 {
-	//cout << "dtor text" << endl;
 	file.close();
 }
 
@@ -145,5 +142,5 @@ bool text::isEnd(int i)
 
 void text::showText()
 {
-	cout <<"Предложения, начинающиеся с однобуквенных слов:\n"<< chosenSentence << endl <<"Остальные предложения:\n"<< otherSentence<<"\n\n\n";
+	cout <<"Sentences thats start with one-letter word:\n"<< chosenSentence << endl <<"Other sentences:\n"<< otherSentence<<"\n\n\n";
 }

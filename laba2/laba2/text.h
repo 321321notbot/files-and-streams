@@ -9,7 +9,6 @@ private:
 	string chosenSentence;
 	string otherSentence;
 	string buffer;
-	string puncMarks;
 
 public:
 	text();
@@ -18,10 +17,8 @@ public:
 	void sentenceCheck();
 	void findDot();
 	bool findSpace();
-	char whatMark();
 	bool isEnd(int i);
 	void whatToDo(bool flag,int idx);
-	//void 
 	string splitSentence(int i, string s);
 	void showText();
 
