@@ -1,12 +1,6 @@
 #include "stdafx.h"
 #include "text.h"
 
-
-text::text()
-{
-}
-
-
 text::text(string & name)
 {
 	file.open(name);
@@ -61,7 +55,7 @@ void text::findDot()
 	int idx;
 	for (idx=0;idx<sentence.size();idx++)
 	{
-		if (sentence[idx] == '.')
+		if (sentence[idx] == '.' || sentence[idx] == '!'  || sentence[idx] == '?')
 			break;
 	}
 	if (idx != sentence.size() )

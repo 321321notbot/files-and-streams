@@ -11,7 +11,6 @@ private:
 	string buffer;
 
 public:
-	text();
 	text(string& name);
 	void fileParse();
 	void sentenceCheck();
