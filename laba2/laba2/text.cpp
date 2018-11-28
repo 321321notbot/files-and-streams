@@ -3,18 +3,23 @@
 
 text::text(string & name)
 {
-	file.open(name);
-	if (file.is_open())
-		cout << "File is readable" << endl;
-	else
+	file.exceptions(ifstream::badbit | ifstream::failbit);
+	try 
 	{
-		cout << "File doesnt exist" << endl;
+		file.open(name);
+		fileParse();
+		showText();
+		file.close();
+	}
+	catch (const ifstream::failure& exc)
+	{
+		cout << "Error while opening file: " << name << endl
+			<< exc.what() << endl<<endl;
 	}
 }
 
 text::~text()
-{
-	file.close();
+{ 
 }
 
 void text::fileParse()
@@ -24,7 +29,6 @@ void text::fileParse()
 		getline(file, sentence);
 		sentenceCheck();
 	}
-
 }
 
 
@@ -58,30 +62,17 @@ void text::findDot()
 		if (sentence[idx] == '.' || sentence[idx] == '!'  || sentence[idx] == '?')
 			break;
 	}
-	if (idx != sentence.size() )
-	{
-		if (findSpace())
-		{
-			whatToDo(true,idx);
-			
-		}
-		else
-		{
-			whatToDo(false,idx);
-		}
-			
-	}
+	if (idx != sentence.size())
+		whatToDo(findSpace(), idx);
 	else
-	{
 		buffer = sentence;
-	}
 
 
 }
 
-void text::whatToDo(bool flag,int idx)
+void text::whatToDo(bool hasSpace,int idx)
 {
-	if (flag)
+	if (hasSpace)
 	{
 		if (!isEnd(idx))
 		{
@@ -118,15 +109,6 @@ void text::whatToDo(bool flag,int idx)
 
 }
 
-
-string text::splitSentence(int i,string s)
-{
-	if (s=="end")
-		return sentence.substr(i + 2, (sentence.size() - i));
-	else if (s=="begin")
-		return sentence.substr(0, i+1);
-}
-
 bool text::isEnd(int i)
 {
 	if ((sentence.size()-1)!=i)
@@ -136,5 +118,8 @@ bool text::isEnd(int i)
 
 void text::showText()
 {
-	cout <<"Sentences thats start with one-letter word:\n"<< chosenSentence << endl <<"Other sentences:\n"<< otherSentence<<"\n\n\n";
+	if (chosenSentence.empty())
+		cout << "No sentences that start with one-letter word :( \n" << "Other sentences:\n" << otherSentence << "\n\n\n";
+	else 
+		cout <<"Sentences thats start with one-letter word:\n"<< chosenSentence << endl <<"Other sentences:\n"<< otherSentence<<"\n\n\n";
 }

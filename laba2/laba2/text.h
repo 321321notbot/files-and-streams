@@ -17,8 +17,7 @@ public:
 	void findDot();
 	bool findSpace();
 	bool isEnd(int i);
-	void whatToDo(bool flag,int idx);
-	string splitSentence(int i, string s);
+	void whatToDo(bool hasSpace,int idx);
 	void showText();
 
 	~text();
