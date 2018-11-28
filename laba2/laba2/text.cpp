@@ -3,7 +3,7 @@
 
 text::text(string & name)
 {
-	file.exceptions(ifstream::badbit | ifstream::failbit);
+	file.exceptions(ifstream::failbit);
 	try 
 	{
 		file.open(name);
@@ -62,7 +62,14 @@ void text::findDot()
 		if (sentence[idx] == '.' || sentence[idx] == '!'  || sentence[idx] == '?')
 			break;
 	}
-	if (idx != sentence.size())
+	if (idx == 1)
+	{
+		chosenSentence += sentence.substr(0, idx + 1);
+		sentence.erase(0, idx+2);
+		if (!sentence.empty())
+			findDot();
+	}
+	if (idx != sentence.size() && !sentence.empty())
 		whatToDo(findSpace(), idx);
 	else
 		buffer = sentence;
@@ -77,16 +84,14 @@ void text::whatToDo(bool hasSpace,int idx)
 		if (!isEnd(idx))
 		{
 			string temp = sentence.substr(0, idx + 1);
-			chosenSentence += temp;
-			chosenSentence += " ";
+			chosenSentence += temp + " ";
 			sentence = sentence.substr(idx + 2, (sentence.size() - idx));
 			findDot();
 
 		}
 		else
 		{
-			chosenSentence += sentence;
-			chosenSentence += " ";
+			chosenSentence += sentence + " ";
 		}
 	}
 	else 
@@ -94,15 +99,13 @@ void text::whatToDo(bool hasSpace,int idx)
 		if (!isEnd(idx))
 		{
 			string temp = sentence.substr(0, idx + 1);
-			otherSentence += temp;
-			otherSentence += " ";
+			otherSentence += temp + " ";
 			sentence = sentence.substr(idx + 2, (sentence.size() - idx));
 			findDot();
 		}
 		else
 		{
-			otherSentence += sentence;
-			otherSentence += " ";
+			otherSentence += sentence + " ";
 		}
 
 	}
